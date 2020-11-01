@@ -1,18 +1,18 @@
 export enum HeroRank {
-  rare,
-  rarePlus,
-  elite,
-  elitePlus,
-  epic,
-  epicPlus,
-  legendary,
-  legendaryPlus,
-  mythical,
-  mythical1,
-  mythical2,
-  mythical3,
-  mythical4,
-  mythical5,
+  rare = 'Rare',
+  rarePlus = 'Rare+',
+  elite = 'Elite',
+  elitePlus = 'Elite+',
+  epic = 'Epic',
+  epicPlus = 'Epic+',
+  legendary = 'Legendary',
+  legendaryPlus = 'Legendary+',
+  mythical = 'Mythical',
+  mythical1 = 'Mythical *',
+  mythical2 = 'Mythical **',
+  mythical3 = 'Mythical ***',
+  mythical4 = 'Mythical ****',
+  mythical5 = 'Mythical *****',
 }
 
 export enum HeroType {
@@ -24,6 +24,7 @@ export enum HeroType {
 }
 
 export type Hero = {
+  id?: string;
   name: string;
   type: HeroType;
   initialRank: HeroRank;
