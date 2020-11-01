@@ -1,33 +1,18 @@
-import { HeroRank } from "./ranks";
-
-export enum HeroType {
-  weapon,
-  psychic,
-  hiTech,
-  physical,
-  complete,
-}
-
-export type Hero = {
-  name: string;
-  type: HeroType;
-  initialRank: HeroRank;
-  currentRank?: HeroRank;
-};
+import { Hero, HeroType, HeroRank } from './types';
 
 const heroes: Hero[] = [
   {
-    name: "Frog Man",
+    name: 'Frog Man',
     type: HeroType.weapon,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Eyelashes",
+    name: 'Eyelashes',
     type: HeroType.weapon,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Tripple-Staff Lily",
+    name: 'Tripple-Staff Lily',
     type: HeroType.weapon,
     initialRank: HeroRank.rare,
   },
@@ -37,82 +22,82 @@ const heroes: Hero[] = [
     initialRank: HeroRank.rare,
   },
   {
-    name: "Slugrus",
+    name: 'Slugrus',
     type: HeroType.psychic,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Ground Dragon",
+    name: 'Ground Dragon',
     type: HeroType.psychic,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Super Custom YO649Z Mk. II",
+    name: 'Super Custom YO649Z Mk. II',
     type: HeroType.hiTech,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Jet Niceguy",
+    name: 'Jet Niceguy',
     type: HeroType.hiTech,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Hammerhead",
+    name: 'Hammerhead',
     type: HeroType.hiTech,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Tank-top Blackhole",
+    name: 'Tank-top Blackhole',
     type: HeroType.physical,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Mumen Rider",
+    name: 'Mumen Rider',
     type: HeroType.physical,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Snek",
+    name: 'Snek',
     type: HeroType.physical,
     initialRank: HeroRank.rare,
   },
   {
-    name: "Okamaitachi",
+    name: 'Okamaitachi',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Bushidrill",
+    name: 'Bushidrill',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Smile Man",
+    name: 'Smile Man',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Iairon",
+    name: 'Iairon',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Spring Mustachio",
+    name: 'Spring Mustachio',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Golden Ball",
+    name: 'Golden Ball',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Stinger",
+    name: 'Stinger',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Subterranean King",
+    name: 'Subterranean King',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
@@ -122,167 +107,167 @@ const heroes: Hero[] = [
     initialRank: HeroRank.elite,
   },
   {
-    name: "Metal Bat",
+    name: 'Metal Bat',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Awakened Mosquito Girl",
+    name: 'Awakened Mosquito Girl',
     type: HeroType.psychic,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Groribas",
+    name: 'Groribas',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Sky King",
+    name: 'Sky King',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Konbu Infinity",
+    name: 'Konbu Infinity',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Vaccine Man",
+    name: 'Vaccine Man',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Mosquito Girl",
+    name: 'Mosquito Girl',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Melzargard",
+    name: 'Melzargard',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Geryuganshoop",
+    name: 'Geryuganshoop',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Hellish Blizzard",
+    name: 'Hellish Blizzard',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Terrible Torrnado",
+    name: 'Terrible Torrnado',
     type: HeroType.weapon,
     initialRank: HeroRank.elite,
   },
   {
-    name: "G4",
+    name: 'G4',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Fukegao",
+    name: 'Fukegao',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Doctor Genus",
+    name: 'Doctor Genus',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Armored Gorilla",
+    name: 'Armored Gorilla',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Blue Fire",
+    name: 'Blue Fire',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Genos",
+    name: 'Genos',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Metal Knight",
+    name: 'Metal Knight',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Child Emperorr",
+    name: 'Child Emperorr',
     type: HeroType.hiTech,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Heavy Tank Loincloth",
+    name: 'Heavy Tank Loincloth',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Lightning Max",
+    name: 'Lightning Max',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Beast King",
+    name: 'Beast King',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Puri-puri Prisoner",
+    name: 'Puri-puri Prisoner',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Tank-top Master",
+    name: 'Tank-top Master',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Handsom Kamen Amai Mask",
+    name: 'Handsom Kamen Amai Mask',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Carnage Kabuto",
+    name: 'Carnage Kabuto',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Superalloy Blackluster",
+    name: 'Superalloy Blackluster',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Silverfang (Bang)",
+    name: 'Silverfang (Bang)',
     type: HeroType.physical,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Atomic Samurai",
+    name: 'Atomic Samurai',
     type: HeroType.complete,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Zombieman",
+    name: 'Zombieman',
     type: HeroType.complete,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Garou",
+    name: 'Garou',
     type: HeroType.complete,
     initialRank: HeroRank.elite,
   },
   {
-    name: "King",
+    name: 'King',
     type: HeroType.complete,
     initialRank: HeroRank.elite,
   },
   {
-    name: "Boros",
+    name: 'Boros',
     type: HeroType.complete,
     initialRank: HeroRank.elite,
   },
