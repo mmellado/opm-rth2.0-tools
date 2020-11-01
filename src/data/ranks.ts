@@ -24,11 +24,12 @@ const isSameType = (hero1: Hero, hero2: Hero, hero3?: Hero): boolean => {
   return hero1.type === hero2.type;
 };
 
-const promoteRarePlus = (hero1: Hero, hero2: Hero, hero3: Hero) => {
-  return (
-    hero1.currentRank === HeroRank.rare &&
-    isSameHero(hero1, hero2, hero3) &&
-    isSameRank(hero1, hero2, hero3) &&
-    isSameType(hero1, hero2, hero3)
-  );
-};
+export const promoteRarePlus = (
+  hero1: Hero,
+  hero2: Hero,
+  hero3: Hero
+): boolean =>
+  hero1.currentRank === HeroRank.rare &&
+  isSameHero(hero1, hero2, hero3) &&
+  isSameRank(hero1, hero2, hero3) &&
+  isSameType(hero1, hero2, hero3);

@@ -16,6 +16,7 @@ module.exports = {
           ['@components', './src/components'],
           ['@utils', './src/utils'],
           ['@styles', './src/styles'],
+          ['@data', './src/data'],
         ],
         extensions: ['.js', '.ts', '.tsx', '.json'],
       },
@@ -42,9 +43,7 @@ module.exports = {
         extensions: ['.tsx'],
       },
     ],
-    'react/no-array-index-key': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'react/prop-types': 'off',
     'react/button-has-type': 'off',
     'import/no-extraneous-dependencies': [
       'error',
@@ -82,10 +81,16 @@ module.exports = {
       },
       plugins: ['@typescript-eslint'],
       extends: [
-        'airbnb-typescript',
         'plugin:@typescript-eslint/recommended',
         'prettier/@typescript-eslint',
       ],
+      rules: {
+        'react/prop-types': 'off',
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': 'warn',
+        'no-shadow': 'off',
+        '@typescript-eslint/no-shadow': ['error'],
+      },
     },
   ],
 };

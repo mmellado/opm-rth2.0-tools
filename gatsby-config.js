@@ -18,6 +18,7 @@ module.exports = {
           '@components': 'src/components',
           '@utils': 'src/utils',
           '@styles': 'src/styles',
+          '@data': 'src/data',
         },
         extensions: ['ts', 'tsx'],
       },
