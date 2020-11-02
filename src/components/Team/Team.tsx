@@ -1,12 +1,35 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { navigate } from 'gatsby';
+import copy from 'copy-text-to-clipboard';
 
 import Hero from '@components/Hero';
 import HeroSelector from '@components/HeroSelector';
+import Modal from '@components/Modal';
 import { Hero as HeroType } from '@data/types';
 
 import { encryptData, decryptData } from '@utils/crypto';
+
+const TeamWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  position: relative;
+  border: 1px solid #666;
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
+
+const ShareWrapper = styled.pre`
+  overflow: scroll;
+  padding: 20px;
+  border-radius: 5px;
+  background: #ccc;
+  border: 1px solid #ddd;
+  font-family: monospace;
+  box-shadow: inset 0 0 5px #666;
+`;
 
 const Team: React.FC = () => {
   const [team, setTeam] = useState<HeroType[]>([]);
@@ -73,29 +96,47 @@ const Team: React.FC = () => {
     setTeam((t) => t.filter((h: HeroType) => h.id !== heroId));
   }, []);
 
+  const shareUrl = useMemo(
+    () =>
+      `https://${window ? window.location.hostname : 'localhost'}${
+        window ? window.location.pathname : '/'
+      }?teamId=${teamId}`,
+    [teamId]
+  );
+
+  const copyShareUrl = useCallback(() => {
+    copy(shareUrl);
+    alert('Url copied to clipboard');
+  }, [shareUrl]);
+
   return (
     <div>
-      {teamId && (
-        <div>
-          Share Your team
-          <pre>
-            https://{window ? window.location.hostname : 'localhost'}
-            {window ? window.location.pathname : '/'}?teamId={teamId}
-          </pre>
-        </div>
-      )}
+      <h1>Team Builder</h1>
       <button onClick={toggleHeroSelector}>
         {heroSelectorOpen ? 'Cancel' : 'Add Hero'}
       </button>
-      {heroSelectorOpen && <HeroSelector onSelect={addHero} />}
-      {team.map((hero) => (
-        <button
-          onClick={() => removeHero(hero.id as string)}
-          key={hero.id as string}
-        >
-          <Hero {...hero} />
-        </button>
-      ))}
+      <TeamWrapper>
+        {team.map((hero) => (
+          <button
+            onClick={() => removeHero(hero.id as string)}
+            key={hero.id as string}
+          >
+            <Hero {...hero} />
+          </button>
+        ))}
+      </TeamWrapper>
+
+      {teamId && (
+        <div>
+          <h2>Share Your team</h2>
+          <button onClick={copyShareUrl}>Copy URL</button>
+          <ShareWrapper>{shareUrl}</ShareWrapper>
+        </div>
+      )}
+
+      <Modal isOpen={heroSelectorOpen} onClose={toggleHeroSelector}>
+        <HeroSelector onSelect={addHero} />
+      </Modal>
     </div>
   );
 };

@@ -14,27 +14,27 @@ type BorderProps = {
 };
 
 const borderColors = {
-  [HeroRank.rare]: 'blue',
-  [HeroRank.rarePlus]: 'blue',
-  [HeroRank.elite]: 'purple',
-  [HeroRank.elitePlus]: 'purple',
-  [HeroRank.epic]: 'yellow',
-  [HeroRank.epicPlus]: 'yellow',
-  [HeroRank.legendary]: 'red',
-  [HeroRank.legendaryPlus]: 'red',
-  [HeroRank.mythical]: 'silver',
-  [HeroRank.mythical1]: 'silver',
-  [HeroRank.mythical2]: 'silver',
-  [HeroRank.mythical3]: 'silver',
-  [HeroRank.mythical4]: 'silver',
-  [HeroRank.mythical5]: 'silver',
+  [HeroRank.rare]: 'rgb(102, 144, 198)',
+  [HeroRank.rarePlus]: 'rgb(102, 144, 198)',
+  [HeroRank.elite]: 'rgb(123,77,190)',
+  [HeroRank.elitePlus]: 'rgb(123,77,190)',
+  [HeroRank.epic]: 'rgb(248, 222, 137)',
+  [HeroRank.epicPlus]: 'rgb(248, 222, 137)',
+  [HeroRank.legendary]: 'rgb(144, 42, 61)',
+  [HeroRank.legendaryPlus]: 'rgb(144, 42, 61)',
+  [HeroRank.mythical]: 'rgb(246, 252, 248)',
+  [HeroRank.mythical1]: 'rgb(246, 252, 248)',
+  [HeroRank.mythical2]: 'rgb(246, 252, 248)',
+  [HeroRank.mythical3]: 'rgb(246, 252, 248)',
+  [HeroRank.mythical4]: 'rgb(246, 252, 248)',
+  [HeroRank.mythical5]: 'rgb(246, 252, 248)',
 };
 
 const borderCornerColor = {
-  [HeroRank.rarePlus]: 'purple',
-  [HeroRank.elitePlus]: 'yellow',
-  [HeroRank.epicPlus]: 'red',
-  [HeroRank.legendaryPlus]: 'silver',
+  [HeroRank.rarePlus]: 'rgb(123,77,190)',
+  [HeroRank.elitePlus]: 'rgb(248, 222, 137)',
+  [HeroRank.epicPlus]: 'rgb(144, 42, 61)',
+  [HeroRank.legendaryPlus]: 'rgb(246, 252, 248)',
 };
 
 const Border = styled.div<BorderProps>`
@@ -45,19 +45,24 @@ const Border = styled.div<BorderProps>`
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+  text-align: center;
 `;
 
 const TopRightCorner = styled.div<BorderProps>`
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
 
   width: 20px;
   height: 20px;
 
-  border-top: 5px solid silver;
-  border-right: 5px solid silver;
+  border-top: 5px solid rgb(155, 155, 155);
+  border-right: 5px solid rgb(155, 155, 155);
 
   &:before {
     content: '';
@@ -97,18 +102,17 @@ const BottomLeftCorner = styled(TopRightCorner)`
 `;
 
 const badgeColor = {
-  [HeroType.complete]: 'silver',
-  [HeroType.hiTech]: 'cyan',
-  [HeroType.weapon]: 'green',
-  [HeroType.physical]: 'red',
-  [HeroType.psychic]: 'purple',
+  [HeroType.complete]: 'rgb(214, 221, 239)',
+  [HeroType.hiTech]: 'rgb(145, 178, 229)',
+  [HeroType.weapon]: 'rgb(146, 171, 70)',
+  [HeroType.physical]: 'rgb(128, 51, 39)',
+  [HeroType.psychic]: 'rgb(185, 147, 243)',
 };
 
 const Badge = styled.div<{ type: HeroType; rank: HeroRank }>`
   position: absolute;
   top: -1px;
   left: -1px;
-  z-index: 1;
 
   &:before {
     content: '';
@@ -130,10 +134,10 @@ const Badge = styled.div<{ type: HeroType; rank: HeroRank }>`
     display: block;
     width: 20px;
     height: 20px;
+    border: 2px solid white;
     border-radius: 100%;
     background: ${({ type }) => badgeColor[type]};
     position: relative;
-    z-index: 1;
     top: 5px;
     left: 5px;
   }
@@ -148,12 +152,16 @@ const Hero: React.FC<HeroProps> = ({
   const rank = currentRank || initialRank;
   return (
     <Wrapper>
-      {borderCornerColor[rank] && <TopRightCorner rank={rank} />}
       <Border rank={rank}>
         <Badge type={type} rank={rank} />
         {name}
       </Border>
-      {borderCornerColor[rank] && <BottomLeftCorner rank={rank} />}
+      {borderCornerColor[rank] && (
+        <>
+          <TopRightCorner rank={rank} />
+          <BottomLeftCorner rank={rank} />
+        </>
+      )}
     </Wrapper>
   );
 };

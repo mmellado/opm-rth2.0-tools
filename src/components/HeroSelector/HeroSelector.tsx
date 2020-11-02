@@ -1,11 +1,8 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
-import { Hero, HeroRank } from '@data/types';
 import Select from 'react-select';
+import { Hero, HeroRank } from '@data/types';
 import heroes from '@data/heroes';
-
-interface HeroSelectorProps {
-  onSelect: (heroes: Hero[]) => void;
-}
+import { HeroSelectorProps } from './types';
 
 const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
   const allRanks: HeroRank[] = useMemo(() => {
