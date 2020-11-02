@@ -4,7 +4,7 @@ import Select from 'react-select';
 import heroes from '@data/heroes';
 
 interface HeroSelectorProps {
-  onSelect: (hero: Hero) => void;
+  onSelect: (heroes: Hero[]) => void;
 }
 
 const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
@@ -13,6 +13,7 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
   }, []);
   const [selectedHero, setSelectedHero] = useState<Hero | undefined>();
   const [selectedRank, setSelectedRank] = useState<HeroRank | undefined>();
+  const [amount, setAmount] = useState(1);
   const [validRanks, setValidRanks] = useState<HeroRank[]>(allRanks);
 
   const getValidRanks = useCallback(() => {
@@ -46,11 +47,17 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
     setSelectedRank(value);
   }, []);
 
+  const updateAmount = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(parseInt(e.target.value, 10));
+  }, []);
+
   const submitHero = useCallback(() => {
     if (selectedHero && selectedRank) {
-      onSelect({ ...selectedHero, currentRank: selectedRank } as Hero);
+      const newHero = { ...selectedHero, currentRank: selectedRank } as Hero;
+
+      onSelect(new Array(amount).fill(newHero) as Hero[]);
     }
-  }, [selectedHero, onSelect, selectedRank]);
+  }, [selectedHero, onSelect, selectedRank, amount]);
 
   useEffect(() => {
     getValidRanks();
@@ -77,6 +84,7 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
           />
         </>
       )}
+      <input type="number" min="1" value={amount} onChange={updateAmount} />
       <input type="submit" value="Select" />
     </form>
   );

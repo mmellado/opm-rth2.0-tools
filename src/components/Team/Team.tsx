@@ -59,8 +59,11 @@ const Team: React.FC = () => {
   }, []);
 
   const addHero = useCallback(
-    (hero: HeroType): void => {
-      setTeam((t) => [...t, { ...hero, id: nanoid() }]);
+    (heroes: HeroType[]): void => {
+      setTeam((t) => [
+        ...t,
+        ...heroes.map((hero) => ({ ...hero, id: nanoid() })),
+      ]);
       toggleHeroSelector();
     },
     [toggleHeroSelector]
