@@ -30,3 +30,9 @@ export type Hero = {
   initialRank: HeroRank;
   currentRank?: HeroRank;
 };
+
+export type HeroFilter = {
+  sameHero: boolean;
+  rank: HeroRank;
+  numberOfHeros: number;
+};

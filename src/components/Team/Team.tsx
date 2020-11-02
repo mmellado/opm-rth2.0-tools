@@ -7,7 +7,7 @@ import copy from 'copy-text-to-clipboard';
 import Hero from '@components/Hero';
 import HeroSelector from '@components/HeroSelector';
 import Modal from '@components/Modal';
-import { Hero as HeroType } from '@data/types';
+import { Hero as HeroProps, HeroType } from '@data/types';
 
 import { encryptData, decryptData } from '@utils/crypto';
 
@@ -31,8 +31,38 @@ const ShareWrapper = styled.pre`
   box-shadow: inset 0 0 5px #666;
 `;
 
+const HeroWrapper = styled.div`
+  position: relative;
+  button {
+    display: none;
+  }
+
+  &:hover button {
+    display: flex;
+  }
+`;
+
+const RemoveHero = styled.button`
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background: white;
+  color: black;
+  position: absolute;
+  top: 5px;
+  right: 0;
+  cursor: pointer;
+  border: 1px solid #666;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: monospace;
+`;
+
 const Team: React.FC = () => {
-  const [team, setTeam] = useState<HeroType[]>([]);
+  const [team, setTeam] = useState<HeroProps[]>([]);
+  const [filter, setFilter] = useState<HeroType | null>(null);
   const [teamId, setTeamId] = useState('');
   const [heroSelectorOpen, setHeroSelectorOpen] = useState(false);
 
@@ -43,9 +73,9 @@ const Team: React.FC = () => {
       const queryTeamId = decodeURIComponent(queryParams.get('teamId') || '');
       if (queryTeamId) {
         try {
-          const initialTeam = decryptData(queryTeamId) as HeroType[];
+          const initialTeam = decryptData(queryTeamId) as HeroProps[];
           setTeamId(queryTeamId);
-          const initialTeamWithIds = initialTeam.map((h: HeroType) => ({
+          const initialTeamWithIds = initialTeam.map((h: HeroProps) => ({
             ...h,
             id: nanoid(),
           }));
@@ -82,7 +112,7 @@ const Team: React.FC = () => {
   }, []);
 
   const addHero = useCallback(
-    (heroes: HeroType[]): void => {
+    (heroes: HeroProps[]): void => {
       setTeam((t) => [
         ...t,
         ...heroes.map((hero) => ({ ...hero, id: nanoid() })),
@@ -93,7 +123,7 @@ const Team: React.FC = () => {
   );
 
   const removeHero = useCallback((heroId: string): void => {
-    setTeam((t) => t.filter((h: HeroType) => h.id !== heroId));
+    setTeam((t) => t.filter((h: HeroProps) => h.id !== heroId));
   }, []);
 
   const shareUrl = useMemo(
@@ -109,21 +139,52 @@ const Team: React.FC = () => {
     alert('Url copied to clipboard');
   }, [shareUrl]);
 
+  const updateFilter = useCallback((type: HeroType | null): void => {
+    setFilter(type);
+  }, []);
+
   return (
     <div>
       <h1>Team Builder</h1>
       <button onClick={toggleHeroSelector}>
         {heroSelectorOpen ? 'Cancel' : 'Add Hero'}
       </button>
-      <TeamWrapper>
-        {team.map((hero) => (
-          <button
-            onClick={() => removeHero(hero.id as string)}
-            key={hero.id as string}
-          >
-            <Hero {...hero} />
+      {team.length && (
+        <fieldset>
+          <legend>Filter team</legend>
+          <button onClick={() => updateFilter(null)}>All</button>
+          <button onClick={() => updateFilter(HeroType.physical)}>
+            Physical
           </button>
-        ))}
+          <button onClick={() => updateFilter(HeroType.weapon)}>Weapon</button>
+          <button onClick={() => updateFilter(HeroType.hiTech)}>Hi-Tech</button>
+          <button onClick={() => updateFilter(HeroType.psychic)}>
+            Psychic
+          </button>
+          <button onClick={() => updateFilter(HeroType.complete)}>
+            Complete
+          </button>
+        </fieldset>
+      )}
+      <TeamWrapper>
+        {team
+          .filter((h) => {
+            if (filter !== null) {
+              return h.type === filter;
+            }
+            return true;
+          })
+          .map((hero) => (
+            <HeroWrapper key={hero.id as string}>
+              <Hero {...hero} />
+              <RemoveHero
+                onClick={() => removeHero(hero.id as string)}
+                title="Remove"
+              >
+                x
+              </RemoveHero>
+            </HeroWrapper>
+          ))}
       </TeamWrapper>
 
       {teamId && (
