@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { nanoid } from 'nanoid';
 import { navigate } from 'gatsby';
@@ -118,6 +124,7 @@ const Team: React.FC = () => {
   const [filter, setFilter] = useState<HeroType | null>(null);
   const [teamId, setTeamId] = useState('');
   const [heroSelectorOpen, setHeroSelectorOpen] = useState(false);
+  const shareUrl = useRef('');
 
   // Load initial team from query paramtere if present
   useEffect(() => {
@@ -161,6 +168,12 @@ const Team: React.FC = () => {
     }
   }, [team]);
 
+  useEffect(() => {
+    shareUrl.current = `https://${
+      window ? window.location.hostname : 'localhost'
+    }${window ? window.location.pathname : '/'}?teamId=${teamId}`;
+  }, [teamId]);
+
   const toggleHeroSelector = useCallback(() => {
     setHeroSelectorOpen((s) => !s);
   }, []);
@@ -179,14 +192,6 @@ const Team: React.FC = () => {
   const removeHero = useCallback((heroId: string): void => {
     setTeam((t) => t.filter((h: HeroProps) => h.id !== heroId));
   }, []);
-
-  const shareUrl = useMemo(
-    () =>
-      `https://${window ? window.location.hostname : 'localhost'}${
-        window ? window.location.pathname : '/'
-      }?teamId=${teamId}`,
-    [teamId]
-  );
 
   const updateFilter = useCallback((type: HeroType | null): void => {
     setFilter(type);
@@ -234,7 +239,7 @@ const Team: React.FC = () => {
         )}
       </TeamWrapper>
 
-      {teamId && <ShareUrl url={shareUrl} title="Share your team" />}
+      {teamId && <ShareUrl url={shareUrl.current} title="Share your team" />}
 
       <Modal isOpen={heroSelectorOpen} onClose={toggleHeroSelector}>
         <HeroSelector onSelect={addHero} />
