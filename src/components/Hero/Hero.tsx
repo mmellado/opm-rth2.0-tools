@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Img, { GatsbyImageFluidProps } from 'gatsby-image';
 import { Hero as HeroProps, HeroRank, HeroType } from '@data/types';
+import { FaStar } from 'react-icons/fa';
+import { nanoid } from 'nanoid';
 
 import complete from '@img/complete.png';
 import weapon from '@img/weapon.png';
@@ -138,8 +140,31 @@ const Badge = styled.img`
   width: 25px;
   height: 25px;
   position: absolute;
-  top: -30px;
-  left: 0px;
+  top: -28px;
+  left: 2px;
+`;
+
+const numStars = {
+  [HeroRank.mythical1]: 1,
+  [HeroRank.mythical2]: 2,
+  [HeroRank.mythical3]: 3,
+  [HeroRank.mythical4]: 4,
+  [HeroRank.mythical5]: 5,
+};
+
+const StarContainer = styled.div`
+  width: 100%;
+  height: 10px;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+`;
+
+const Star = styled(FaStar)`
+  color: rgb(246, 252, 248);
+  width: 10px;
 `;
 
 const Hero: React.FC<HeroProps> = ({
@@ -150,6 +175,7 @@ const Hero: React.FC<HeroProps> = ({
   avatar,
 }) => {
   const rank = currentRank || initialRank;
+
   return (
     <Wrapper>
       <Border rank={rank}>
@@ -157,6 +183,14 @@ const Hero: React.FC<HeroProps> = ({
         <BadgeCorner type={type} rank={rank}>
           <Badge src={badgeIcon[type]} alt="" />
         </BadgeCorner>
+        {(numStars[rank] && (
+          <StarContainer>
+            {[...Array(numStars[rank])].map(() => (
+              <Star key={nanoid()} />
+            ))}
+          </StarContainer>
+        )) ||
+          null}
       </Border>
       {borderCornerColor[rank] && (
         <>

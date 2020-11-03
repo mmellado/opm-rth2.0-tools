@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { navigate } from 'gatsby';
+import { FaTimes } from 'react-icons/fa';
 
 import Hero from '@components/Hero';
 import HeroSelector from '@components/HeroSelector';
@@ -49,6 +50,11 @@ const RemoveHero = styled.button`
   justify-content: center;
   text-align: center;
   font-family: monospace;
+
+  svg {
+    width: 10px;
+    height: 10px;
+  }
 `;
 
 const Team: React.FC = () => {
@@ -151,7 +157,7 @@ const Team: React.FC = () => {
                 onClick={() => removeHero(hero.id as string)}
                 title="Remove"
               >
-                x
+                <FaTimes />
               </RemoveHero>
             </HeroWrapper>
           ))}

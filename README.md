@@ -10,7 +10,6 @@ The tools in the roadmap include:
 
 As of right now, the list of pending tasks include:
 
-- Add stars to mythical ranks in hero icons
 - Style the team builder
 - Ensure the tool works on mobile
 - Create GitHub repository
