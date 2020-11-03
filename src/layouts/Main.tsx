@@ -7,7 +7,7 @@ import Footer from '@components/Footer';
 
 const MainWrapper = styled.main`
   ${grid}
-  min-height: 80vh;
+  min-height: 75vh;
   padding-top: 50px;
   padding-bottom: 50px;
 `;

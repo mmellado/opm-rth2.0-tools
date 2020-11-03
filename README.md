@@ -10,7 +10,7 @@ The tools in the roadmap include:
 
 As of right now, the list of pending tasks include:
 
-- Style the team builder
-- Ensure the tool works on mobile
-- Create GitHub repository
 - Add proper SEO component
+- Build the promotion simulator
+- Add hero ranking page
+- Add additional news pages etc
