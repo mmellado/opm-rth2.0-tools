@@ -9,6 +9,9 @@ const FooterWrapper = styled.footer`
 
 const Inner = styled.div`
   ${eightOneColumns}
+  text-align: center;
+  font-size: 10px;
+  color: #666;
 `;
 
 const Footer: React.FC = () => {

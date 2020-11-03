@@ -8,6 +8,8 @@ import Footer from '@components/Footer';
 const MainWrapper = styled.main`
   ${grid}
   min-height: 80vh;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 const Inner = styled.div`
@@ -18,7 +20,6 @@ const Main: React.FC = ({ children }) => {
   return (
     <>
       <GlobalStyles />
-
       <NavBar />
       <MainWrapper>
         <Inner>{children}</Inner>

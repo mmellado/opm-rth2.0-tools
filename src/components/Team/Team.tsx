@@ -21,6 +21,7 @@ const TeamWrapper = styled.div`
   border: 1px solid #666;
   border-radius: 5px;
   margin-bottom: 20px;
+  min-height: 162px;
 `;
 
 const HeroWrapper = styled.div`
@@ -55,6 +56,18 @@ const RemoveHero = styled.button`
     width: 10px;
     height: 10px;
   }
+`;
+
+const NoHeroes = styled.p`
+  width: 70%;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Team: React.FC = () => {
@@ -97,6 +110,7 @@ const Team: React.FC = () => {
         });
       } else {
         setTeamId('');
+        setFilter(null);
         navigate(window.location.pathname, {
           replace: true,
         });
@@ -135,22 +149,23 @@ const Team: React.FC = () => {
     setFilter(type);
   }, []);
 
+  const renderedTeam = useMemo(() => {
+    return team.filter((h) => {
+      if (filter !== null) {
+        return h.type === filter;
+      }
+      return true;
+    });
+  }, [team, filter]);
+
   return (
     <div>
       <h1>Team Builder</h1>
-      <button onClick={toggleHeroSelector}>
-        {heroSelectorOpen ? 'Cancel' : 'Add Hero'}
-      </button>
+      <button onClick={toggleHeroSelector}>Add Hero</button>
       {(team.length && <TypeFilter onButtonClick={updateFilter} />) || null}
       <TeamWrapper>
-        {team
-          .filter((h) => {
-            if (filter !== null) {
-              return h.type === filter;
-            }
-            return true;
-          })
-          .map((hero) => (
+        {(renderedTeam.length &&
+          renderedTeam.map((hero) => (
             <HeroWrapper key={hero.id as string}>
               <Hero {...hero} />
               <RemoveHero
@@ -160,7 +175,18 @@ const Team: React.FC = () => {
                 <FaTimes />
               </RemoveHero>
             </HeroWrapper>
-          ))}
+          ))) || (
+          <NoHeroes>
+            {filter !== null ? (
+              'No heroes in your team for this Type'
+            ) : (
+              <>
+                Add heroes to your team
+                <button onClick={toggleHeroSelector}>Add Hero</button>
+              </>
+            )}
+          </NoHeroes>
+        )}
       </TeamWrapper>
 
       {teamId && <ShareUrl url={shareUrl} />}

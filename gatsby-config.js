@@ -9,6 +9,7 @@ module.exports = {
     siteUrl: `https://opm-rth2-tools.netlify.app`,
     description: `Tools for One Punch Man Roat to Hero 2.0 Game`,
   },
+
   plugins: [
     `gatsby-plugin-typescript`,
     {
@@ -39,6 +40,14 @@ module.exports = {
       options: {
         displayName: !isProd,
         fileName: !isProd,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Roboto'],
+        },
       },
     },
   ],
