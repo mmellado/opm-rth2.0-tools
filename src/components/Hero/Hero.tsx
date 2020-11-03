@@ -59,7 +59,7 @@ const Border = styled.div<BorderProps>`
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
-  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 13px 24px 6px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;

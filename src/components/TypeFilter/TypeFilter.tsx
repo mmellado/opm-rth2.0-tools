@@ -14,12 +14,12 @@ const FilterIcon = styled.img`
   width: 30px;
   height: 30px;
   cursor: pointer;
+  margin-left: 10px;
 `;
 
 const TypeFilter: React.FC<TypeFilterProps> = ({ onButtonClick }) => {
   return (
-    <fieldset>
-      <legend>Filter team</legend>
+    <div>
       <button onClick={() => onButtonClick(HeroType.complete)}>
         <FilterIcon src={complete} alt="Complete" />
       </button>
@@ -38,7 +38,7 @@ const TypeFilter: React.FC<TypeFilterProps> = ({ onButtonClick }) => {
       <button onClick={() => onButtonClick(null)}>
         <FilterIcon src={all} alt="All" />
       </button>
-    </fieldset>
+    </div>
   );
 };
 

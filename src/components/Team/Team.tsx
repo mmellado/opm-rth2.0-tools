@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { nanoid } from 'nanoid';
 import { navigate } from 'gatsby';
 import { FaTimes } from 'react-icons/fa';
@@ -9,8 +9,10 @@ import HeroSelector from '@components/HeroSelector';
 import Modal from '@components/Modal';
 import TypeFilter from '@components/TypeFilter';
 import ShareUrl from '@components/ShareUrl';
-import { Hero as HeroProps, HeroType } from '@data/types';
+import Button from '@components/Button';
 
+import { Hero as HeroProps, HeroType } from '@data/types';
+import { mediaquery } from '@styles/mediaquery';
 import { encryptData, decryptData } from '@utils/crypto';
 
 const TeamWrapper = styled.div`
@@ -18,9 +20,11 @@ const TeamWrapper = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   position: relative;
-  border: 1px solid #666;
+  background: #eee;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 0 5px #ccc;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   min-height: 162px;
 `;
 
@@ -68,6 +72,45 @@ const NoHeroes = styled.p`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+`;
+
+const Notice = styled.span`
+  margin-bottom: 20px;
+`;
+
+const Actions = styled.div`
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+
+  ${mediaquery.md(css`
+    flex-direction: row;
+  `)}
+`;
+
+const Title = styled.h1`
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 50px;
+  text-align: center;
+
+  ${mediaquery.md(css`
+    font-size: 35px;
+  `)}
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  margin-bottom: 20px;
+
+  ${mediaquery.md(css`
+    width: auto;
+    margin-bottom: 0;
+  `)}
 `;
 
 const Team: React.FC = () => {
@@ -160,9 +203,11 @@ const Team: React.FC = () => {
 
   return (
     <div>
-      <h1>Team Builder</h1>
-      <button onClick={toggleHeroSelector}>Add Hero</button>
-      {(team.length && <TypeFilter onButtonClick={updateFilter} />) || null}
+      <Title>Team Builder</Title>
+      <Actions>
+        <StyledButton onClick={toggleHeroSelector}>Add Hero</StyledButton>
+        {(team.length && <TypeFilter onButtonClick={updateFilter} />) || null}
+      </Actions>
       <TeamWrapper>
         {(renderedTeam.length &&
           renderedTeam.map((hero) => (
@@ -181,15 +226,15 @@ const Team: React.FC = () => {
               'No heroes in your team for this Type'
             ) : (
               <>
-                Add heroes to your team
-                <button onClick={toggleHeroSelector}>Add Hero</button>
+                <Notice>Add heroes to your team</Notice>
+                <Button onClick={toggleHeroSelector}>Add Hero</Button>
               </>
             )}
           </NoHeroes>
         )}
       </TeamWrapper>
 
-      {teamId && <ShareUrl url={shareUrl} />}
+      {teamId && <ShareUrl url={shareUrl} title="Share your team" />}
 
       <Modal isOpen={heroSelectorOpen} onClose={toggleHeroSelector}>
         <HeroSelector onSelect={addHero} />
