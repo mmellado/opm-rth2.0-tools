@@ -1,10 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '@styles/GlobalStyles';
+import { grid, eightOneColumns } from '@styles/grid';
+import NavBar from '@components/NavBar';
+import Footer from '@components/Footer';
 
 const MainWrapper = styled.main`
-  width: 90vw;
-  margin: 0 auto;
+  ${grid}
+  min-height: 80vh;
+`;
+
+const Inner = styled.div`
+  ${eightOneColumns}
 `;
 
 const Main: React.FC = ({ children }) => {
@@ -12,9 +19,11 @@ const Main: React.FC = ({ children }) => {
     <>
       <GlobalStyles />
 
-      <header>Navigation here</header>
-      <MainWrapper>{children}</MainWrapper>
-      <footer>Footer here</footer>
+      <NavBar />
+      <MainWrapper>
+        <Inner>{children}</Inner>
+      </MainWrapper>
+      <Footer />
     </>
   );
 };

@@ -10,10 +10,8 @@ The tools in the roadmap include:
 
 As of right now, the list of pending tasks include:
 
-- Abstract components in team builder to be independent
 - Add stars to mythical ranks in hero icons
 - Style the team builder
-- Add logo and navigation bar
-- Add relevant information to the footer
 - Ensure the tool works on mobile
 - Create GitHub repository
+- Add proper SEO component

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { navigate } from 'gatsby';
-import copy from 'copy-text-to-clipboard';
 
 import Hero from '@components/Hero';
 import HeroSelector from '@components/HeroSelector';
 import Modal from '@components/Modal';
 import TypeFilter from '@components/TypeFilter';
+import ShareUrl from '@components/ShareUrl';
 import { Hero as HeroProps, HeroType } from '@data/types';
 
 import { encryptData, decryptData } from '@utils/crypto';
@@ -20,16 +20,6 @@ const TeamWrapper = styled.div`
   border: 1px solid #666;
   border-radius: 5px;
   margin-bottom: 20px;
-`;
-
-const ShareWrapper = styled.pre`
-  overflow: scroll;
-  padding: 20px;
-  border-radius: 5px;
-  background: #ccc;
-  border: 1px solid #ddd;
-  font-family: monospace;
-  box-shadow: inset 0 0 5px #666;
 `;
 
 const HeroWrapper = styled.div`
@@ -135,11 +125,6 @@ const Team: React.FC = () => {
     [teamId]
   );
 
-  const copyShareUrl = useCallback(() => {
-    copy(shareUrl);
-    alert('Url copied to clipboard');
-  }, [shareUrl]);
-
   const updateFilter = useCallback((type: HeroType | null): void => {
     setFilter(type);
   }, []);
@@ -172,13 +157,7 @@ const Team: React.FC = () => {
           ))}
       </TeamWrapper>
 
-      {teamId && (
-        <div>
-          <h2>Share Your team</h2>
-          <button onClick={copyShareUrl}>Copy URL</button>
-          <ShareWrapper>{shareUrl}</ShareWrapper>
-        </div>
-      )}
+      {teamId && <ShareUrl url={shareUrl} />}
 
       <Modal isOpen={heroSelectorOpen} onClose={toggleHeroSelector}>
         <HeroSelector onSelect={addHero} />
