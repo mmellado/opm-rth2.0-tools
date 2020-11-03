@@ -1,3 +1,5 @@
+import { FluidObject } from 'gatsby-image';
+
 export enum HeroRank {
   rare = 'Rare',
   rarePlus = 'Rare+',
@@ -29,6 +31,7 @@ export type Hero = {
   type: HeroType;
   initialRank: HeroRank;
   currentRank?: HeroRank;
+  avatar?: FluidObject;
 };
 
 export type HeroFilter = {

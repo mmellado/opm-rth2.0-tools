@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import Select from 'react-select';
 import { Hero, HeroRank } from '@data/types';
-import heroes from '@data/heroes';
+import useHeroData from '@data/heroes';
 import { HeroSelectorProps } from './types';
 
 const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
@@ -12,6 +12,8 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
   const [selectedRank, setSelectedRank] = useState<HeroRank | undefined>();
   const [amount, setAmount] = useState(1);
   const [validRanks, setValidRanks] = useState<HeroRank[]>(allRanks);
+
+  const heroes = useHeroData();
 
   const getValidRanks = useCallback(() => {
     if (selectedHero) {
@@ -29,16 +31,19 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
     }
   }, [allRanks, selectedHero]);
 
-  const selectHero = useCallback(({ value }) => {
-    const hero = heroes.find((h) => h.name === value);
-    if (hero) {
-      setSelectedHero(hero);
-      setSelectedRank(hero.initialRank);
-    } else {
-      setSelectedHero(undefined);
-      setSelectedRank(undefined);
-    }
-  }, []);
+  const selectHero = useCallback(
+    ({ value }) => {
+      const hero = heroes.find((h) => h.name === value);
+      if (hero) {
+        setSelectedHero(hero);
+        setSelectedRank(hero.initialRank);
+      } else {
+        setSelectedHero(undefined);
+        setSelectedRank(undefined);
+      }
+    },
+    [heroes]
+  );
 
   const updateRank = useCallback(({ value }) => {
     setSelectedRank(value);

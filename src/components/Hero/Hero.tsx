@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import Img, { GatsbyImageFluidProps } from 'gatsby-image';
 import { Hero as HeroProps, HeroRank, HeroType } from '@data/types';
+
+import complete from '@img/complete.png';
+import weapon from '@img/weapon.png';
+import physical from '@img/physical.png';
+import psychic from '@img/psychic.png';
+import hiTech from '@img/hiTech.png';
 
 const Wrapper = styled.div`
   width: 100px;
@@ -12,6 +19,11 @@ const Wrapper = styled.div`
 type BorderProps = {
   rank: HeroRank;
 };
+
+const Avatar = styled(Img)<GatsbyImageFluidProps>`
+  width: 130%;
+  height: 130%;
+`;
 
 const borderColors = {
   [HeroRank.rare]: 'rgb(102, 144, 198)',
@@ -101,46 +113,33 @@ const BottomLeftCorner = styled(TopRightCorner)`
   transform: rotate(180deg);
 `;
 
-const badgeColor = {
-  [HeroType.complete]: 'rgb(214, 221, 239)',
-  [HeroType.hiTech]: 'rgb(145, 178, 229)',
-  [HeroType.weapon]: 'rgb(146, 171, 70)',
-  [HeroType.physical]: 'rgb(128, 51, 39)',
-  [HeroType.psychic]: 'rgb(185, 147, 243)',
+const badgeIcon = {
+  [HeroType.complete]: complete,
+  [HeroType.hiTech]: hiTech,
+  [HeroType.weapon]: weapon,
+  [HeroType.physical]: physical,
+  [HeroType.psychic]: psychic,
 };
 
-const Badge = styled.div<{ type: HeroType; rank: HeroRank }>`
+const BadgeCorner = styled.div<{ type: HeroType; rank: HeroRank }>`
   position: absolute;
   top: -1px;
   left: -1px;
 
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 30px 0 0;
+  border-color: ${({ rank }) => borderColors[rank]} transparent transparent
+    transparent;
+`;
 
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 30px 30px 0 0;
-    border-color: ${({ rank }) => borderColors[rank]} transparent transparent
-      transparent;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid white;
-    border-radius: 100%;
-    background: ${({ type }) => badgeColor[type]};
-    position: relative;
-    top: 5px;
-    left: 5px;
-  }
+const Badge = styled.img`
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: -30px;
+  left: 0px;
 `;
 
 const Hero: React.FC<HeroProps> = ({
@@ -148,13 +147,16 @@ const Hero: React.FC<HeroProps> = ({
   currentRank,
   name,
   type,
+  avatar,
 }) => {
   const rank = currentRank || initialRank;
   return (
     <Wrapper>
       <Border rank={rank}>
-        <Badge type={type} rank={rank} />
-        {name}
+        {avatar ? <Avatar alt={name} title={name} fluid={avatar} /> : name}
+        <BadgeCorner type={type} rank={rank}>
+          <Badge src={badgeIcon[type]} alt="" />
+        </BadgeCorner>
       </Border>
       {borderCornerColor[rank] && (
         <>

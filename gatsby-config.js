@@ -19,6 +19,7 @@ module.exports = {
           '@utils': 'src/utils',
           '@styles': 'src/styles',
           '@data': 'src/data',
+          '@img': 'src/img',
         },
         extensions: ['ts', 'tsx'],
       },

@@ -11,6 +11,13 @@ import { Hero as HeroProps, HeroType } from '@data/types';
 
 import { encryptData, decryptData } from '@utils/crypto';
 
+import complete from '@img/complete.png';
+import weapon from '@img/weapon.png';
+import physical from '@img/physical.png';
+import psychic from '@img/psychic.png';
+import hiTech from '@img/hiTech.png';
+import all from '@img/all.png';
+
 const TeamWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -58,6 +65,12 @@ const RemoveHero = styled.button`
   justify-content: center;
   text-align: center;
   font-family: monospace;
+`;
+
+const FilterIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 `;
 
 const Team: React.FC = () => {
@@ -149,23 +162,30 @@ const Team: React.FC = () => {
       <button onClick={toggleHeroSelector}>
         {heroSelectorOpen ? 'Cancel' : 'Add Hero'}
       </button>
-      {team.length && (
+      {(team.length && (
         <fieldset>
           <legend>Filter team</legend>
-          <button onClick={() => updateFilter(null)}>All</button>
-          <button onClick={() => updateFilter(HeroType.physical)}>
-            Physical
-          </button>
-          <button onClick={() => updateFilter(HeroType.weapon)}>Weapon</button>
-          <button onClick={() => updateFilter(HeroType.hiTech)}>Hi-Tech</button>
-          <button onClick={() => updateFilter(HeroType.psychic)}>
-            Psychic
-          </button>
           <button onClick={() => updateFilter(HeroType.complete)}>
-            Complete
+            <FilterIcon src={complete} alt="Complete" />
+          </button>
+          <button onClick={() => updateFilter(HeroType.hiTech)}>
+            <FilterIcon src={hiTech} alt="Hi-Tech" />
+          </button>
+          <button onClick={() => updateFilter(HeroType.weapon)}>
+            <FilterIcon src={weapon} alt="Weapon" />
+          </button>
+          <button onClick={() => updateFilter(HeroType.physical)}>
+            <FilterIcon src={physical} alt="Physical" />
+          </button>
+          <button onClick={() => updateFilter(HeroType.psychic)}>
+            <FilterIcon src={psychic} alt="Psychic" />
+          </button>
+          <button onClick={() => updateFilter(null)}>
+            <FilterIcon src={all} alt="All" />
           </button>
         </fieldset>
-      )}
+      )) ||
+        null}
       <TeamWrapper>
         {team
           .filter((h) => {
