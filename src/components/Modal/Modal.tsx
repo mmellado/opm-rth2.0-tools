@@ -1,5 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { mediaquery } from '@styles/mediaquery';
+import { FaTimes } from 'react-icons/fa';
 import { ModalProps } from './types';
 
 const Wrapper = styled.div`
@@ -21,7 +23,7 @@ const Overlay = styled.div`
 `;
 
 const Content = styled.div`
-  width: 70vw;
+  width: 90vw;
   background: white;
   padding: 50px;
   border-radius: 10px;
@@ -30,6 +32,17 @@ const Content = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  ${mediaquery.md(css`
+    width: 70vw;
+  `)}
+`;
+
+const Close = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 `;
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
@@ -38,7 +51,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       <Wrapper>
         <Overlay onClick={onClose} />
         <Content>
-          <button onClick={onClose}>Close</button>
+          <Close onClick={onClose} title="Close">
+            <FaTimes />
+          </Close>
           {children}
         </Content>
       </Wrapper>
