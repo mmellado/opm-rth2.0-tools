@@ -634,7 +634,7 @@ const useHeroData = (): Hero[] => {
     },
     {
       heroId: 'N',
-      name: 'Child Emperorr',
+      name: 'Child Emperor',
       type: HeroType.hiTech,
       initialRank: HeroRank.elite,
       avatar: query.cemperor.childImageSharp.fluid,
