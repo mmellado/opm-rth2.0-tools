@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import styled, { css } from 'styled-components';
 import Select from 'react-select';
-import { Hero, HeroRank } from '@data/types';
+import { Hero, HeroRank, HeroRankNames } from '@data/types';
 import useHeroData from '@data/heroes';
 import Button from '@components/Button';
 import { mediaquery } from '@styles/mediaquery';
@@ -74,13 +74,9 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
   const getValidRanks = useCallback(() => {
     if (selectedHero) {
       if (selectedHero.initialRank === HeroRank.rare) {
-        setValidRanks(
-          allRanks.filter(
-            (rank) => !rank.includes('Legendary') && !rank.includes('Mythical')
-          )
-        );
+        setValidRanks(allRanks.filter((rank) => rank < HeroRank.legendary));
       } else if (selectedHero.initialRank === HeroRank.elite) {
-        setValidRanks(allRanks.filter((rank) => !rank.includes('Rare')));
+        setValidRanks(allRanks.filter((rank) => rank >= HeroRank.elite));
       }
     } else {
       setValidRanks(allRanks);
@@ -89,7 +85,7 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
 
   const selectHero = useCallback(
     ({ value }) => {
-      const hero = heroes.find((h) => h.name === value);
+      const hero = heroes.find((h) => h.heroId === value);
       if (hero) {
         setSelectedHero(hero);
         setSelectedRank(hero.initialRank);
@@ -130,7 +126,7 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
         isSearchable
         styles={customSelectStyles}
         placeholder="Hero"
-        options={heroes.map((h) => ({ value: h.name, label: h.name }))}
+        options={heroes.map((h) => ({ value: h.heroId, label: h.name }))}
         onChange={selectHero}
       />
       {selectedHero && (
@@ -141,11 +137,11 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
             styles={customSelectStyles}
             options={validRanks.map((rank) => ({
               value: rank,
-              label: rank,
+              label: HeroRankNames[rank],
             }))}
-            defaultValue={{
-              value: validRanks[0],
-              label: validRanks[0],
+            value={{
+              value: selectedRank,
+              label: HeroRankNames[selectedRank as HeroRank],
             }}
             onChange={updateRank}
           />

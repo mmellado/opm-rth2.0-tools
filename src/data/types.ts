@@ -1,21 +1,37 @@
 import { FluidObject } from 'gatsby-image';
 
 export enum HeroRank {
-  rare = 'Rare',
-  rarePlus = 'Rare+',
-  elite = 'Elite',
-  elitePlus = 'Elite+',
-  epic = 'Epic',
-  epicPlus = 'Epic+',
-  legendary = 'Legendary',
-  legendaryPlus = 'Legendary+',
-  mythical = 'Mythical',
-  mythical1 = 'Mythical *',
-  mythical2 = 'Mythical **',
-  mythical3 = 'Mythical ***',
-  mythical4 = 'Mythical ****',
-  mythical5 = 'Mythical *****',
+  rare,
+  rarePlus,
+  elite,
+  elitePlus,
+  epic,
+  epicPlus,
+  legendary,
+  legendaryPlus,
+  mythical,
+  mythical1,
+  mythical2,
+  mythical3,
+  mythical4,
+  mythical5,
 }
+export const HeroRankNames = {
+  [HeroRank.rare]: 'Rare',
+  [HeroRank.rarePlus]: 'Rare+',
+  [HeroRank.elite]: 'Elite',
+  [HeroRank.elitePlus]: 'Elite+',
+  [HeroRank.epic]: 'Epic',
+  [HeroRank.epicPlus]: 'Epic+',
+  [HeroRank.legendary]: 'Legendary',
+  [HeroRank.legendaryPlus]: 'Legendary+',
+  [HeroRank.mythical]: 'Mythical',
+  [HeroRank.mythical1]: 'Mythical*',
+  [HeroRank.mythical2]: 'Mythical**',
+  [HeroRank.mythical3]: 'Mythical***',
+  [HeroRank.mythical4]: 'Mythical****',
+  [HeroRank.mythical5]: 'Mythical*****',
+};
 
 export enum HeroType {
   weapon,
@@ -26,6 +42,7 @@ export enum HeroType {
 }
 
 export type Hero = {
+  heroId: string;
   id?: string;
   name: string;
   type: HeroType;
