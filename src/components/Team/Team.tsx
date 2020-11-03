@@ -17,9 +17,10 @@ import TypeFilter from '@components/TypeFilter';
 import ShareUrl from '@components/ShareUrl';
 import Button from '@components/Button';
 
-import { Hero as HeroProps, HeroType } from '@data/types';
+import useHeroData from '@data/heroes';
+import { Hero as HeroProps, HeroType, HeroRank } from '@data/types';
 import { mediaquery } from '@styles/mediaquery';
-import { encryptData, decryptData } from '@utils/crypto';
+import { encryptTeam, decryptTeamID, decryptTeam } from '@utils/crypto';
 
 const TeamWrapper = styled.div`
   display: flex;
@@ -125,21 +126,29 @@ const Team: React.FC = () => {
   const [teamId, setTeamId] = useState('');
   const [heroSelectorOpen, setHeroSelectorOpen] = useState(false);
   const shareUrl = useRef('');
+  const heroes = useHeroData();
 
   // Load initial team from query paramtere if present
   useEffect(() => {
     if (window) {
       const queryParams = new URLSearchParams(window.location.search);
-      const queryTeamId = decodeURIComponent(queryParams.get('teamId') || '');
-      if (queryTeamId) {
+      const queryTeamId = decryptTeamID(queryParams.get('teamId') || '');
+      if (queryTeamId && !teamId) {
         try {
-          const initialTeam = decryptData(queryTeamId) as HeroProps[];
+          const encryptedTeam = decryptTeam(queryTeamId);
           setTeamId(queryTeamId);
-          const initialTeamWithIds = initialTeam.map((h: HeroProps) => ({
-            ...h,
-            id: nanoid(),
-          }));
-          setTeam(initialTeamWithIds);
+          const initialTeam = encryptedTeam.map(
+            (encryptedHero: string): HeroProps => {
+              const [heroId, heroRank] = encryptedHero.split(':');
+              const hero = heroes.find((h) => h.heroId === heroId) as HeroProps;
+              return {
+                ...hero,
+                id: nanoid(),
+                currentRank: parseInt(heroRank, 10) as HeroRank,
+              };
+            }
+          );
+          setTeam(initialTeam);
         } catch {
           navigate(window.location.pathname, {
             replace: true,
@@ -147,13 +156,13 @@ const Team: React.FC = () => {
         }
       }
     }
-  }, []);
+  }, [heroes, teamId]);
 
   // Update the query parameter when the team changes
   useEffect(() => {
     if (window) {
       if (team.length) {
-        const newTeamId = encodeURIComponent(encryptData(team));
+        const newTeamId = encryptTeam(team);
         setTeamId(newTeamId);
         navigate(`${window.location.pathname}?teamId=${newTeamId}`, {
           replace: true,
@@ -179,10 +188,10 @@ const Team: React.FC = () => {
   }, []);
 
   const addHero = useCallback(
-    (heroes: HeroProps[]): void => {
+    (newHeroes: HeroProps[]): void => {
       setTeam((t) => [
         ...t,
-        ...heroes.map((hero) => ({ ...hero, id: nanoid() })),
+        ...newHeroes.map((hero) => ({ ...hero, id: nanoid() })),
       ]);
       toggleHeroSelector();
     },

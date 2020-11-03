@@ -105,13 +105,16 @@ const HeroSelector: React.FC<HeroSelectorProps> = ({ onSelect }) => {
     setAmount(parseInt(e.target.value, 10));
   }, []);
 
-  const submitHero = useCallback(() => {
-    if (selectedHero && selectedRank) {
-      const newHero = { ...selectedHero, currentRank: selectedRank } as Hero;
-
-      onSelect(new Array(amount).fill(newHero) as Hero[]);
-    }
-  }, [selectedHero, onSelect, selectedRank, amount]);
+  const submitHero = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (selectedHero && selectedRank !== undefined) {
+        const newHero = { ...selectedHero, currentRank: selectedRank } as Hero;
+        onSelect([...Array(amount)].fill(newHero) as Hero[]);
+      }
+    },
+    [selectedHero, onSelect, selectedRank, amount]
+  );
 
   useEffect(() => {
     getValidRanks();
