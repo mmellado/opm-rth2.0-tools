@@ -124,6 +124,7 @@ const Team: React.FC = () => {
   const [team, setTeam] = useState<HeroProps[]>([]);
   const [filter, setFilter] = useState<HeroType | null>(null);
   const [teamId, setTeamId] = useState('');
+  const [loadedUrlParam, setLoadedUrlParam] = useState(false);
   const [heroSelectorOpen, setHeroSelectorOpen] = useState(false);
   const shareUrl = useRef('');
   const heroes = useHeroData();
@@ -131,9 +132,10 @@ const Team: React.FC = () => {
   // Load initial team from query paramtere if present
   useEffect(() => {
     if (window) {
+      console.log(loadedUrlParam);
       const queryParams = new URLSearchParams(window.location.search);
       const queryTeamId = decryptTeamID(queryParams.get('teamId') || '');
-      if (queryTeamId && !teamId) {
+      if (queryTeamId && !loadedUrlParam) {
         try {
           const encryptedTeam = decryptTeam(queryTeamId);
           setTeamId(queryTeamId);
@@ -154,9 +156,10 @@ const Team: React.FC = () => {
             replace: true,
           });
         }
+        setLoadedUrlParam(true);
       }
     }
-  }, [heroes, teamId]);
+  }, [heroes, teamId, loadedUrlParam]);
 
   // Update the query parameter when the team changes
   useEffect(() => {
@@ -168,7 +171,6 @@ const Team: React.FC = () => {
           replace: true,
         });
       } else {
-        // TODO: Figure out why it won't let remove the last hero
         setTeamId('');
         setFilter(null);
         navigate(window.location.pathname, {
