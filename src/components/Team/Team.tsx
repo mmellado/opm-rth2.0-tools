@@ -168,6 +168,7 @@ const Team: React.FC = () => {
           replace: true,
         });
       } else {
+        // TODO: Figure out why it won't let remove the last hero
         setTeamId('');
         setFilter(null);
         navigate(window.location.pathname, {
